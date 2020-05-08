@@ -1,0 +1,213 @@
+<style>
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+
+body{
+    background: linear-gradient(150deg,  rgb(23, 23, 26) 15%, #2a3147 70%, #1e1e2c 94%);
+}
+.container{
+    height: 100vh;
+}
+
+.insider {
+    margin-top: 250px;
+    display: grid;
+    place-items: center;
+}
+
+.result{
+    margin-top: -450px;
+    font-size: 50px;
+    color:dodgerblue;
+    border: 2px solid white;
+
+}
+
+.result.show {
+    
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.9);
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 3rem;
+    flex-direction: column;
+    
+    
+}
+
+.container p{
+    color: dodgerblue;
+    font-size: 100px;
+    text-align: center;
+}
+
+.result{
+    display: none;
+}
+
+
+#num{
+    background: rgb(216, 214, 214);
+    color: rgb(20, 131, 241);
+    font-size: 40px;
+    text-align: center;
+    border-radius: 20px;
+}
+
+.sub_btn{
+    margin-top: 20px;
+}
+
+#enter{
+    font-size: 30px;
+    border: 2px solid dodgerblue;
+    background: linear-gradient(150deg,  rgb(23, 23, 26) 15%, #2a3147 70%, #1e1e2c 94%);
+    color: grey;
+    padding-right: 18px;
+    padding-left: 18px;
+}
+
+#enter:hover{
+    transition-duration: 0.5s;
+    color: dodgerblue;
+    border-color: grey;
+}
+
+.disp_area{
+    font-size: 50px;
+    color: orange;
+    border: 2px solid dodgerblue;
+    padding:20px;
+    margin-bottom: 30px;
+    border-radius: 20px;
+
+}
+
+.result{
+    padding-top: 350px;
+}
+#close{
+    margin-top: 20px;
+    font-size: 30px;
+    border-radius: 10px;
+    padding-right: 20px;
+    padding-left: 20px;
+    background: rgba(0, 0, 0, 0.9);
+    color: dodgerblue;
+}
+
+#close:hover{
+    transition-duration: 0.5s;
+    border-color: dodgerblue;
+    color: grey;
+}
+
+#nimp{
+    font-size: 15px;
+    color: grey;
+}
+
+#nimp a{
+    font-size: 25px;
+}
+
+#nimp a:hover{
+    text-decoration: none;
+    color: white;
+}
+</style>
+
+
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            Number-To-Word
+        </title>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet"> 
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    </head>
+    <body>
+        <div class="container">
+            <p>N-2-W</p><br>
+            <p id="nimp">By <a href="https://github.com/killerfizh" target="_blank">Krishna Kompalli</a></p>
+            <div class="insider">
+                <div class="query">
+                    <input type="text" id="num" placeholder="Please enter a number">
+                </div>
+                <div class="sub_btn">
+                    <button type="button" id ="enter">Enter</button>
+                </div>
+            </div>
+        </div>
+        <div class="result" id="result">
+            <div class="disp_area" id="disp_area">
+
+            </div>
+            <button type="button" id="close">Close</button>
+        </div>
+    </body>
+</html>
+
+<script>
+   var one = ['','One ','Two ','Three ','Four ', 'Five ','Six ','Seven ','Eight ','Nine ','Ten ','Eleven ','Twelve ','Thirteen ','Fourteen ','Fifteen ','Sixteen ','Seventeen ','Eighteen ','Nineteen '];
+var ten = ['', '', 'Twenty','Thirty','Forty','Fifty', 'Sixty','Seventy','Eighty','Ninety'];
+
+function till_tens(n,s){
+    var res = "";
+    if(n>19){
+        res += ten[Math.floor(n / 10)] + one[Math.floor(n % 10)];
+
+    }
+    else{
+        res += one[n]
+    }
+
+
+    if (n){
+        res += s;
+    }
+    return res;
+}
+
+
+function n2w(n){
+    var fin = "";
+    fin += till_tens(Math.floor(n / 10000000), "crore ");
+    fin += till_tens((Math.floor(n / 100000) % 100), "lakh");
+    fin += till_tens((Math.floor(n / 1000) % 100), "thousand ");
+    fin += till_tens((Math.floor(n / 100) % 10), "hundred ");
+    if(n > 100 && n % 100){
+        fin += "and ";
+    }   
+    fin += till_tens((n % 100), "only");
+    return fin; 
+}
+
+document.getElementById('enter').onclick = function () {
+    if(document.getElementById('num').value !== ""){
+    document.getElementById("result").classList.add("show");
+    document.getElementById('disp_area').innerHTML = n2w(document.getElementById('num').value);
+    }
+    else{
+        document.getElementById("result").classList.remove("show");
+    }
+   
+};
+document.getElementById('close').onclick = function () {
+    document.getElementById("result").classList.remove("show");
+   
+};
+
+</script>
